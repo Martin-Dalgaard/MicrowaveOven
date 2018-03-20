@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +11,8 @@ using NUnit.Framework;
 
 namespace Microwave.Test.Integration
 {
-    /// <summary>
-    /// I denne IT testes forbindelsen mellem:
-    /// Userinterface og door
-    /// Userinterface og button
-    /// </summary>
     [TestFixture]
-    public class IT1_UserInterfaceDoorButton
+    public class IT2_UserInterfaceLight
     {
         private UserInterface uut;
 
@@ -31,8 +25,9 @@ namespace Microwave.Test.Integration
         private IDisplay display;
         private ILight light;
 
-        private ICookController cooker;
+        private IOutput output;
 
+        private ICookController cooker;
         [SetUp]
         public void Setup()
         {
@@ -40,7 +35,8 @@ namespace Microwave.Test.Integration
             timeButton = new Button();
             startCancelButton = new Button();
             door = new Door();
-            light = Substitute.For<ILight>();
+            output = Substitute.For<IOutput>();
+            light = new Light(output);
             display = Substitute.For<IDisplay>();
             cooker = Substitute.For<ICookController>();
 
@@ -53,26 +49,16 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void DoorOpen()
+        public void DoorOpenLightOn()
         {
             door.Open();
-            light.Received().TurnOn();
+            output.Received().OutputLine("Light is turned on");
         }
         [Test]
-        public void DoorClosed()
+        public void DoorOpenLightOff()
         {
-            door.Open();
             door.Close();
-            light.Received().TurnOff();
+            output.Received().OutputLine("Light is turned off");
         }
-        [Test]
-        public void ButtonClicked()
-        {
-            powerButton.Press();
-            display.Received().ShowPower(50);
-        }
-
-
     }
 }
-
