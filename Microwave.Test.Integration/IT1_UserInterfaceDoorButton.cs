@@ -53,28 +53,37 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void TestDoorOpen()
+        public void DoorOpen()
         {
-            door.Opened += uut.OnDoorOpened;
             door.Open();
             light.Received().TurnOn();
         }
         [Test]
-        public void TestDoorClosed()
+        public void DoorClosed()
         {
-            door.Opened += uut.OnDoorOpened;
             door.Open();
-            door.Closed += uut.OnDoorClosed;
             door.Close();
             light.Received().TurnOff();
         }
         [Test]
-        public void TestPowerButtonClicked()
+        public void PowerButtonClicked()
         {
-            powerButton.Pressed += uut.OnPowerPressed;
             powerButton.Press();
             display.Received().ShowPower(50);
         }
+        [Test]
+        public void TimeButtonClicked()
+        {
+            timeButton.Press();
+            display.Received().ShowTime(1,0);
+        }
+        [Test]
+        public void StartCancelButtonClicked()
+        {
+            startCancelButton.Press();
+            light.Received().TurnOn();
+        }
+
 
     }
 }
