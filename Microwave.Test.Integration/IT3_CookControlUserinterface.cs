@@ -12,53 +12,72 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     [TestFixture]
-    public class IT2_UserInterfaceLight
+    public class IT3_CookControlUserinterface
     {
-        private UserInterface uut;
+        private CookController uut;
+
+        private IUserInterface ui;
+        private ITimer timer;
+        private IDisplay display;
+        private IPowerTube powerTube;
 
         private IButton powerButton;
         private IButton timeButton;
         private IButton startCancelButton;
 
         private IDoor door;
-
-        private IDisplay display;
         private ILight light;
 
         private IOutput output;
 
-        private ICookController cooker;
         [SetUp]
         public void Setup()
         {
+            //Cooker
+            timer = Substitute.For<ITimer>();
+            display = Substitute.For<IDisplay>();
+            powerTube = Substitute.For<IPowerTube>();
+
+            uut = new CookController(timer, display, powerTube, null);
+
+            
+            //Userinterface
             powerButton = new Button();
             timeButton = new Button();
             startCancelButton = new Button();
             door = new Door();
             output = Substitute.For<IOutput>();
             light = new Light(output);
-            display = Substitute.For<IDisplay>();
-            cooker = Substitute.For<ICookController>();
-
-            uut = new UserInterface(
+            ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
                 display,
                 light,
-                cooker);
+                uut);
+
+            uut.UI = ui;
+
+
+
         }
 
         [Test]
-        public void DoorOpenLightOn()
+        public void StartCooking_ValidParameters_TimerStarted()
         {
-            door.Open();
-            output.Received().OutputLine("Light is turned on");
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            timer.Received().Start(60);
         }
         [Test]
-        public void DoorOpenLightOff()
+        public void Cooking_TimerExpired_UICalled()
         {
-            door.Open();
-            door.Close();
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+
+            timer.Expired += Raise.EventWith(this, EventArgs.Empty);
+
             output.Received().OutputLine("Light is turned off");
         }
     }

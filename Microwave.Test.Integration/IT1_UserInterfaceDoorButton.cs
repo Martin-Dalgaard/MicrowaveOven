@@ -56,22 +56,56 @@ namespace Microwave.Test.Integration
         public void DoorOpen()
         {
             door.Open();
-            light.Received().TurnOn();
+            light.Received(1).TurnOn();
         }
         [Test]
         public void DoorClosed()
         {
             door.Open();
             door.Close();
-            light.Received().TurnOff();
+            light.Received(1).TurnOff();
         }
         [Test]
         public void ButtonClicked()
         {
             powerButton.Press();
-            display.Received().ShowPower(50);
+            display.Received(1).ShowPower(50);
+        }
+        [Test]
+        public void ExstensionOneUserPressedCancelDoingSetup()
+        {
+            powerButton.Press();
+            startCancelButton.Press();
+            display.Received(1).Clear();
         }
 
+        [Test]
+        public void ExstensionTwoUserOpensDoorDoingSetup()
+        {
+            powerButton.Press();
+            door.Open();
+            light.Received(1).TurnOn();
+            display.Received(1).Clear();
+        }
+        [Test]
+        public void ExstensionThreeUserPressedCancelDoingCooking()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            startCancelButton.Press();
+            cooker.Received(1).Stop();
+
+        }
+        [Test]
+        public void ExstensionFourUserOpenedDoorDoingCooking()
+        {
+            powerButton.Press();
+            timeButton.Press();
+            startCancelButton.Press();
+            door.Open();
+            cooker.Received(1).Stop();
+        }
 
     }
 }

@@ -41,9 +41,9 @@ namespace MicrowaveOvenClasses.Boundary
 
         private void OnTimerEvent(object sender, System.Timers.ElapsedEventArgs args)
         {
-            // One tick has passed
-            // Do what I should
-            TimeRemaining -= 1000;
+            //Her er fejlen timeRemaining er angivet i sekunder
+            //Der stod -= 1000
+            TimeRemaining -= 1;
             TimerTick?.Invoke(this, EventArgs.Empty);
 
             if (TimeRemaining <= 0)
