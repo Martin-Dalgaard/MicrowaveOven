@@ -12,6 +12,10 @@ using NUnit.Framework.Internal;
 
 namespace Microwave.Test.Integration
 {
+    /// <summary>
+    /// I denne IT, testes forbindelsen mellem:
+    /// Cookcontroller og powertube
+    /// </summary>
     [TestFixture]
     public class IT5_CookControlPowerTube
     {

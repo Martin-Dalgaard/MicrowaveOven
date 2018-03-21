@@ -11,6 +11,11 @@ using NUnit.Framework;
 
 namespace Microwave.Test.Integration
 {
+    /// <summary>
+    /// I denne IT, testes forbindelsen mellem:
+    /// Userinterface og display
+    /// CookController og display
+    /// </summary>
     [TestFixture]
     public class IT4_CookControlUserinterfaceDisplay
     {

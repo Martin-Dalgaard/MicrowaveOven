@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Microwave.Test.Integration
 {
     /// <summary>
-    /// I denne IT testes forbindelsen mellem:
+    /// I denne IT, testes forbindelsen mellem:
     /// Userinterface og door
     /// Userinterface og button
     /// </summary>

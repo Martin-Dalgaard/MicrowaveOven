@@ -12,6 +12,10 @@ using NUnit.Framework.Internal;
 
 namespace Microwave.Test.Integration
 {
+    /// <summary>
+    /// I denne IT, testes forbindelsen mellem:
+    /// CookController og timer
+    /// </summary>
     [TestFixture]
     public class IT6_CookControlTimer
     {
