@@ -67,6 +67,7 @@ namespace Microwave.Test.Integration
         [Test]
         public void StartCookingPowerTubeOn()
         {
+
             powerButton.Press();
             timeButton.Press();
             startCancelButton.Press();
