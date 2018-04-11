@@ -22,8 +22,10 @@ namespace Microwave.Test.Unit
         [Test]
         public void TurnOn_WasOff_CorrectOutput()
         {
+            // Power forsøges udgivet i procent, derfor omregnes
+            // (100/700)*50 = 7,14, afrundet til 7
             uut.TurnOn(50);
-            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("50 %")));
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains("7 %")));
         }
 
         [Test]
